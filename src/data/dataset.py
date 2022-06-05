@@ -38,7 +38,7 @@ class TextDataset(Dataset):
         tokens = self.tokenize_fn(text)
         x = self.vectorizer_fn(tokens)
         
-        x = torch.from_numpy(x.toarray().squeeze())
+        x = torch.from_numpy(x) # x: numpy.array 
         if self.sparse:
             x = x.to_sparse()
         
