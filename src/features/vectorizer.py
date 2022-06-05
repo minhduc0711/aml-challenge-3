@@ -12,21 +12,25 @@ def get_count_vectorizer(train_tokens):
     
     return transform
 
-def get_word2vec(tokens, embeddings_index):
-    max_tokens = 10
-    result = np.zeros((max_tokens, 100))
-    if len(tokens) < max_tokens:
-        for idx in range(len(tokens)):
-            word = tokens[idx]
-            try:
-                result[idx, :] = embeddings_index[word]
-            except:
-                continue
-    else:
-        for idx in range(max_tokens):
-            word = tokens[idx]
-            try:
-                result[idx, :] = embeddings_index[word]
-            except:
-                continue
-    return result.flatten()
+class Word2vec:
+    def __init__(self, preTrainedModel):
+        self.preTrainedModel = preTrainedModel
+
+    def get_vector(self, tokens):
+        max_tokens = 10
+        result = np.zeros((max_tokens, 100))
+        if len(tokens) < max_tokens:
+            for idx in range(len(tokens)):
+                word = tokens[idx]
+                try:
+                    result[idx, :] = self.preTrainedModel[word]
+                except:
+                    continue
+        else:
+            for idx in range(max_tokens):
+                word = tokens[idx]
+                try:
+                    result[idx, :] = self.preTrainedModel[word]
+                except:
+                    continue
+        return result.flatten()
