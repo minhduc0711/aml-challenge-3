@@ -1,5 +1,31 @@
 import contractions
 import re
+import emot
+
+vocab_emoji = {
+    ';)': 'smirk',
+    ':]': 'smiley',
+    ':/': 'skeptical',
+    'd:': 'cheeky',
+    ':@': 'sad',
+    '=/': 'annoyed',
+    ':|': 'neutral',
+    '=]': 'happy',
+    ':>': 'happy',
+    ':o': 'surprise',
+    ':$': 'blushing',
+    '=p': 'cheeky',
+    ':[': 'sad',
+    '8-)': 'happy',
+    ':*': 'kiss',
+    ':-0': 'shock',
+    ":'(": 'crying',
+    ":b": 'cheeky',
+    ":{": 'sad',
+    ":')": 'sad',
+    ':x': 'mute',
+    ':-*': 'kiss',
+}
 
 misspelling = {
     'bday': 'birthday',
@@ -19,11 +45,22 @@ misspelling = {
     'awsome': 'awesome',
 }
 
+emot_obj = emot.core.emot()
+
 def preprocess(text):
     text = text.lower()
     # Resolve contractions & slangs
     text = contractions.fix(text)
     
+    return text
+
+def fix_emoji(text):
+    emojis = emot_obj.emoticons(text)
+    for value in emojis['value']:
+        if value in vocab_emoji:
+            text = text.replace(value, vocab_emoji[value])
+        else:
+            continue
     return text
 
 def remove_url(text):
