@@ -1,6 +1,7 @@
 import contractions
 import re
 import emot
+from textacy.preprocessing.normalize import quotation_marks
 
 vocab_emoji = {
     ';)': 'smirk',
@@ -48,11 +49,30 @@ misspelling = {
 emot_obj = emot.core.emot()
 
 def preprocess(text):
-    text = text.lower()
-    # Resolve contractions & slangs
-    text = contractions.fix(text)
-    
+    # text = text.lower()
+    text = remove_url(text)
+    text = re.sub('\d+:\d+', '', text) # remove time
+    text = fix_emoji(text)
+    text = re.sub('<3+', 'love', text)
+    # text = fix_contractions_slang(text)
+    # text = remove_punctuation(text)
+    # text = fix_laughing_words(text)
+    # text = fix_misspelling_word(text)
+
     return text
+
+def fix_contractions_slang(text):
+    text = quotation_marks(text) # Fix quotations mark
+    text = contractions.fix(text)
+    return text
+
+def fix_heart(x):
+    x = re.sub('<3+', 'love', x)
+    return x
+
+def remove_time(time):
+    time = re.sub('\d+:\d+', '', time)
+    return time
 
 def fix_emoji(text):
     emojis = emot_obj.emoticons(text)
