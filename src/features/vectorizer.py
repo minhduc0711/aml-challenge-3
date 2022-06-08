@@ -1,7 +1,6 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.tokenize import word_tokenize
 import numpy as np
-import numpy as np
 
 def get_count_vectorizer(train_tokens):
     # To make CountVectorizer work with tokens: https://stackoverflow.com/a/52855200
