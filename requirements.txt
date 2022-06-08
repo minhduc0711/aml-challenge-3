@@ -2,4 +2,12 @@
 -e .
 
 # external requirements
+pytorch-lightning
 contractions
+gensim
+transformers
+jupyterlab-vim
+textacy
+attrs==19.2.0
+kaggle
+emoji==0.6.0
